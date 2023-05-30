@@ -23,6 +23,7 @@ con_botonmenu = false;
 con_textoavance = false;
 con_botoncerrar = true;
 con_restinternas = true;
+con_btncc = false;
 
 con_musica = true;
 

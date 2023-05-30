@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="../../index.css">
+<link rel="stylesheet" href="../../cjs/jquery.mCustomScrollbar.css" />
+<link href="../../fonts/font-awesome/css/all.css" rel="stylesheet">
+<script src="../../cjs/easeljs-0.8.2.min.js"></script> 
+<script src="../../cjs/tweenjs-0.6.2.min.js"></script> 
+<script src="../../cjs/preloadjs-0.6.2.min.js"></script> 
+<script src="../../cjs/soundjs-0.6.2.min.js"></script> 
+<script src="page.js"></script> 
+<script src="../../principal.js"></script> 
+<script src="../../cjs/jquery.min.js"></script> 
+<script src="../../cjs/jquery.imagemapster.js"></script> 
+<script src="../../cjs/jquery.mCustomScrollbar.concat.min.js"></script> 
+<script src="../../cjs/jquery-ui.min.js"></script> 
+<script src="../../cjs/jquery.ui.touch-punch.min.js"></script> 
+<script>
+	
+	
+var canvas, stage, exportRoot;
+function init() {
+	canvas = document.getElementById("canvas");
+	var loader = new createjs.LoadQueue(false);
+	loader.installPlugin(createjs.Sound);
+	loader.addEventListener("fileload", handleFileLoad);
+	loader.addEventListener("complete", handleComplete);
+	loader.addEventListener("progress", handleProgress);
+	loader.loadManifest(lib.properties.manifest);
+  $.getJSON("../../images/animaciones_atlas_.json", function(json) {
+      frames_animacion = json.frames;
+    });
+}
+function handleFileLoad(evt) {
+	if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
+}
+function playSound(id, loop) {
+	createjs.Sound.play(id, createjs.Sound.INTERRUPT_EARLY, 0, 0, loop);
+}
+ancho_linea = 0;
+alto_linea = 10;
+max_ancho = 450;
+function handleProgress(evt) {
+	stage = new createjs.Stage(canvas);
+	var bordePadding = 2;
+    var borde = new createjs.Shape;
+    borde.graphics.beginFill("rgba(131,120,111,0.4)").drawRect(0, 0, max_ancho + bordePadding*2, alto_linea).endFill();
+    var linea_carga = new createjs.Shape();
+	linea_carga.graphics.beginFill("#009DDF").drawRect(0 + bordePadding,0 + bordePadding, ancho_linea, alto_linea - bordePadding*2).endFill();
+    progreso = Math.round(evt.loaded * max_ancho);
+	ancho_linea = progreso;
+	contenedor = new createjs.Container();
+	contenedor.x = 1240/2 - max_ancho/2;
+	contenedor.y = 495*4/5 - alto_linea/2;
+	contenedor.addChild(borde, linea_carga);
+	//stage.addChild(contenedor);
+	stage.update();
+}
+function handleComplete(evt) {
+	var queue = evt.target;
+	stage = new createjs.Stage(canvas);
+	createjs.Ticker.addEventListener("tick", stage);
+	/////Variables
+	sin_personaje = true;
+	globo_personaje = "Empecemos identificando la importancia del programa de bloqueo y etiquetado, las actividades en las que se debe aplicar y algunos conceptos asociados.";
+	pausas_audio = [[0,16406],[977,19347]];
+
+  coord_flecha_next = [900,100];
+
+  contenidos();	
+}
+</script>
+</head>
+<body onload="init();">
+<canvas id="canvas" width="1260" height="550"></canvas>
+<div id="instruccion_circulos" class="instruccion_circulos"> </div>
+<div class="c_principal c_4_6">
+  <h1 data-posabsbtn="170,320">Seguridad en el uso de recursos compartidos</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <div class="cont_audio">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap4.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio">
+          <div class="resaltado_especial">Los <span class="negrilla">encargados de la información</span> son quienes determinan la <span class="negrilla">criticidad de la información</span> bajo su custodia y los <span class="negrilla">privilegios que otorgan a los usuarios</span> que requieran acceder a esta, en función de los requerimientos del negocio y la necesidad de conocimiento.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="item_c"> <img src="images/diap4.png" height="300"> </div>
+</div>
+<div class="c_masinfo c_1">
+  <h1>Consideraciones para brindar acceso a recursos compartidos </h1>
+  <div class="item_c">
+    <div class="instruccion_interna">Pasa el mouse sobre los íconos.</div>
+    <div class="cont_audio">
+      <div class="audio_c">
+        <audio controls style="margin-top: 15px;">
+          <source src="sounds/diap5a.mp3" type="audio/mpeg">
+          Your browser does not support the audio tag. </audio>
+      </div>
+      <div class="subs_audio">
+    <div>Si te solicitan acceso a información que está almacenada en repositorios de acceso compartido (por ejemplo, el file server), carpetas compartidas o herramientas de trabajo colaborativas (como Teams) al interior del Banco, ten en cuenta las siguientes consideraciones de seguridad de la información:</div></div>
+    </div>
+    <div class="infografia"> <img src="images/diap5.png" height="150">
+      <p></p>
+      <map data-restriccion="no">
+        <area id="zona_sensible0" shape="circ" coords="697,156,70">
+        <area id="zona_sensible1" shape="circ" coords="845,263,70">
+        <area id="zona_sensible2" shape="circ" coords="993,156,70">
+        <area id="zona_sensible3" shape="circ" coords="1139,263,70">
+        <area id="zona_sensible4" shape="circ" coords="1288,156,70">
+        <area id="zona_sensible5" shape="circ" coords="1436,263,70">
+        <area id="zona_sensible6" shape="circ" coords="1583,156,70">
+        <area id="zona_sensible7" shape="circ" coords="1729,263,70">
+      </map>
+    </div>
+  </div>
+</div>
+<div class="c_principal c_2_6">
+  <h1 data-posabsbtn="700,220">Incidentes de seguridad de la información</h1>
+  <div class="item_c">
+    <h1></h1>
+  </div>
+  <div class="item_c" style="margin: 0 30px;">
+    <div class="txt_interno c_1">
+      <h1>Inicio</h1>
+      <div class="item_c">
+        <video style="height: 200px;" autoplay loop muted     >
+          <source src="images/diap7gif.mp4" type="video/mp4">
+          Your browser does not support the video tag. </video>
+        <div class='instruccion_interna'><span class='indica_instclic'></span>Pulsa los botones de la izquierda para ampliar la información.</div>
+      </div>
+    </div>
+    <div class="txt_interno c_2_3">
+      <h1>Definición</h1>
+      <div class="item_c">
+        <div class="cont_audio">
+          <div class="audio_c">
+            <audio controls style="margin-top: 15px;">
+              <source src="sounds/diap8a.mp3" type="audio/mpeg">
+              Your browser does not support the audio tag. </audio>
+          </div>
+          <div class="subs_audio">Un incidente de seguridad de la información es la ocurrencia de una situación que materialice un riesgo que afecte la confidencialidad, integridad, disponibilidad o privacidad de los activos de información del Banco Popular.</div>
+        </div>
+        <div class="instruccion_interna">Pasa el mouse sobre el dato de interés</div>
+        <div id="zona_sensible8" class="negrilla_sensible">
+          <p><i class="fad fa-comment-exclamation"></i></p>
+          <p>Dato de interés</p>
+        </div>
+      </div>
+      <div class="item_c"><img src="images/diap8.png" height="300"> </div>
+    </div>
+    <div class="txt_interno c_1">
+      <h1>Tipos</h1>
+      <div class="item_c">
+        <div class="cont_audio">
+          <div class="audio_c">
+            <audio controls style="margin-top: 15px;">
+              <source src="sounds/diap9a.mp3" type="audio/mpeg">
+              Your browser does not support the audio tag. </audio>
+          </div>
+          <div class="subs_audio">Los tipos de incidentes de seguridad de la información que pueden presentarse en nuestra Entidad son:</div>
+        </div>
+        <div class="infografia"> <img src="images/diap9.png" height="200">
+          <map data-restriccion="no">
+            <area id="zona_sensible9" shape="circ" coords="81,109,70">
+            <area id="zona_sensible10" shape="circ" coords="283,109,70">
+            <area id="zona_sensible11" shape="circ" coords="500,109,70">
+            <area id="zona_sensible12" shape="circ" coords="695,109,70">
+            <area id="zona_sensible13" shape="circ" coords="81,286,70">
+            <area id="zona_sensible14" shape="circ" coords="283,286,70">
+            <area id="zona_sensible15" shape="circ" coords="500,286,70">
+            <area id="zona_sensible16" shape="circ" coords="695,286,70">
+          </map>
+        </div>
+      </div>
+    </div>
+    <div class="txt_interno c_2_3">
+      <h1>Reporte</h1>
+      <div class="item_c">
+        <div class="cont_audio">
+          <div class="audio_c">
+            <audio controls style="margin-top: 15px;">
+              <source src="sounds/diap10.mp3" type="audio/mpeg">
+              Your browser does not support the audio tag. </audio>
+          </div>
+          <div class="subs_audio">Si tienes conocimiento de algún incidente de seguridad de la información, ya sea por parte de nuestros colaboradores o de alguno de nuestros proveedores, debes reportarlo al buzón <span class="negrilla">segurinfo@bancopopular.com.co</span> </div>
+        </div>
+      </div>
+      <div class="item_c"><img src="images/diap10.png" height="300"> </div>
+    </div>
+  </div>
+</div>
+<div class="c_principal c_2_1">
+  <h1 data-posabsbtn="170,320">Etiquetado de información</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <div class="cont_audio">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap12a.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio">El etiquetado de información es el conjunto de actividades encaminadas a colocar una marca, rótulo o etiqueta a los activos de información del Banco. Los activos deben ser clasificados por cada dueño de proceso, de acuerdo con el principio de Confidencialidad. Las categorías de clasificación son: </div>
+      </div>
+      <div class="negrilla_sensible" id="zona_sensible17">Información Pública </div>
+      <div class="negrilla_sensible" id="zona_sensible18">Información Uso Interno </div>
+      <div class="negrilla_sensible" id="zona_sensible19">Información Confidencial </div>
+      <div class="negrilla_sensible" id="zona_sensible20">Información Confidencial Restringida </div>
+    </div>
+  </div>
+  <div class="item_c">
+    <div class="instruccion_interna">Pasa el mouse sobre los textos resaltados</div>
+    <img src="images/diap12.png" height="200">
+    <div id="zona_sensible21" class="negrilla_sensible">
+      <p><i class="fad fa-comment-exclamation"></i></p>
+      <p>Dato de interés</p>
+    </div>
+  </div>
+</div>
+<div class="c_masinfo c_2_6">
+  <h1>Guía para realizar el etiquetado de información</h1>
+  <div class="item_c">
+    <h1></h1>
+  </div>
+  <div class="item_c" style="margin: 0 30px;">
+    <div class="txt_interno c_1">
+      <h1>Inicio</h1>
+      <div class="item_c">
+        <div class='instruccion_interna'><span class='indica_instclic'></span>Pulsa los botones de la izquierda para ampliar la información.</div>
+      </div>
+    </div>
+    <div class="txt_interno c_3_2">
+      <h1>¿Qué se etiqueta?</h1>
+      <div class="item_c">
+        <div class="cont_audio">
+          <div class="audio_c">
+            <audio controls style="margin-top: 15px;">
+              <source src="sounds/diap14.mp3" type="audio/mpeg">
+              Your browser does not support the audio tag. </audio>
+          </div>
+          <div class="subs_audio">Se etiquetan los activos de información clasificados por confidencialidad como de Uso Interno, Confidencial o Confidencial Restringida que estén en formatos como:<span class="negrilla"> hojas de texto (.doc), hojas de cálculo (.xls), presentaciones (.ppt, pps), archivos PDF, correos electrónicos, reportes, entre otros</span>, por ejemplo: cartas, formatos, formas, presentaciones, manuales, reportes, informes, boletines, instructivos, etc.</div>
+        </div>
+      </div>
+      <div class="item_c"><img src="images/diap14.png" height="190"> </div>
+    </div>
+    <div class="txt_interno c_4_3">
+      <h1>¿Quién etiqueta?</h1>
+      <div class="item_c">
+        <div class="cont_audio">
+          <div class="audio_c">
+            <audio controls style="margin-top: 15px;">
+              <source src="sounds/diap15.mp3" type="audio/mpeg">
+              Your browser does not support the audio tag. </audio>
+          </div>
+          <div class="subs_audio">
+            <div class="resaltado_especial">El etiquetado de la información está en cabeza de los <span class="negrilla">Dueños del proceso</span>, a su vez, los <span class="negrilla">funcionarios</span> que utilizan y/o protegen la información deben hacerlo de acuerdo con su participación en la ejecución de los procesos. </div>
+            <div>Son también responsables de etiquetar la información <span class="negrilla">quienes administran los sitios físicos y/o digitales</span> donde esta reside. </div>
+          </div>
+        </div>
+      </div>
+      <div class="item_c"><img src="images/diap15.png" height="190"> </div>
+    </div>
+    <div class="txt_interno c_1">
+      <h1>¿Cómo se etiqueta?</h1>
+      <div class="item_c">
+        <div class="txt_internob c_1">
+          <h1>Inicio</h1>
+          <div class="item_c">
+            <div class="cont_audio">
+              <div class="audio_c">
+                <audio controls style="margin-top: 15px;">
+                  <source src="sounds/diap16a.mp3" type="audio/mpeg">
+                  Your browser does not support the audio tag. </audio>
+              </div>
+              <div class="subs_audio">El etiquetado de información debe contar con los siguientes parámetros: </div>
+            </div>
+            <div class="infografia"> <img src="images/diap16.png" height="120">
+              <p></p>
+              <map data-restriccion="no">
+                <area id="zona_sensible22" shape="circ" coords="77,82,70">
+                <area id="zona_sensible23" shape="circ" coords="249,82,70">
+                <area id="zona_sensible24" shape="circ" coords="435,82,70">
+              </map>
+            </div>
+            <div class='instruccion_interna'>Pulsa el botón para ver algunos ejemplos de etiquetado.<span class='indica_instclicb'></span></div>
+          </div>
+        </div>
+        <style> 
+img#img_zoom1 {
+    height: 500px;
+}
+</style>
+        <div class="txt_internob c_1_1">
+          <h1>Ejemplos</h1>
+          <div class="item_c"><img src="images/diap17a.jpg" height="150">
+           <a href="images/diap17a.jpg" class="descarga" download>Descargar</a>
+          </div>
+          <div class="item_c"><img src="images/diap17b.jpg" height="150">
+           <a href="images/diap17b.jpg" class="descarga" download>Descargar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mas_personaje c_1">
+  <h1></h1>
+  <div class="item_c"></div>
+</div>
+<div class="c_principal c_1-1">
+  <h1  data-posabsbtn="700,220">Actividad</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <table style="text-align: center; margin: auto; width: 800px;">
+        <td><div class="cont_audio">
+              <div class="audio_c">
+                <audio controls style="margin-top: 15px;">
+                  <source src="sounds/diap19.mp3" type="audio/mpeg">
+                  Your browser does not support the audio tag. </audio>
+              </div>
+              <div class="subs_audio">
+                <div>La hora de recuperar el escudo ha llegado. ¡Aplica tus conocimientos para vencer a Gerard y quitarle el escudo! <br>
+                  <br>
+                  Pulsa el botón “Ir a las preguntas” para resolver algunas actividades.</div>
+              </div>
+            </div></td>
+          <td style="width: 240px;"><img src="images/diap19.png" height="300"></td>
+      </table>
+    </div>
+  </div>
+  <div class="item_c">
+    <div class="boton_siguiente">
+      <div id="txt_btnsig2">IR A LAS PREGUNTAS </div>
+    </div>
+  </div>
+</div>
+<div id="pop0" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap5b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Para acceder a información Confidencial o Confidencial Restringida de los clientes y/o del Banco, el medio más seguro son las aplicaciones internas de la Entidad. </div>
+<div id="pop1" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap5c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  El encargado de la información es quien define la necesidad de almacenar información del Banco en repositorios de acceso compartido y otorgar el acceso a los usuarios autorizados (requeridos). </div>
+<div id="pop2" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap5d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Se debe permitir el acceso únicamente a la información mínima requerida para el desarrollo de las actividades del usuario y con los mínimos privilegios de acceso. </div>
+<div id="pop3" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap5e.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Para la información confidencial, como números de tarjetas, únicamente deben ser visibles los seis primeros y los cuatro últimos dígitos. </div>
+<div id="pop4" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap5f.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  El encargado de la información debe actualizar los Privilegios de Acceso a la Información, cuando se presenten novedades con los usuarios, por ejemplo: cambio de privilegios en un rol o perfil, cambio de cargo o área, o retiro de la compañía. </div>
+<div id="pop5" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap5g.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  El encargado de la información debe realizar una revisión periódica para verificar que los usuarios que acceden a la información corresponden a los autorizados previamente por él. </div>
+<div id="pop6" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap5h.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  En los grupos de Teams, únicamente se debe cargar información catalogada como de Uso interno. No está permitido cargar información Confidencial Restringida o Confidencial. </div>
+<div id="pop7" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap5i.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  En caso de que se requiera cargar información Confidencial Restringida o Confidencial, se debe contar con la autorización del responsable de la información. </div>
+<div id="pop8" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap8b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <div>Algunos <span class="negrilla">activos de información</span> que pueden sufrir incidentes de seguridad de la información son: </div>
+  <table class="lista_vinetas">
+    <tr>
+      <td class="vineta"></td>
+      <td> Aplicaciones </td>
+    </tr>
+    <tr>
+      <td class="vineta"></td>
+      <td> Bases de datos </td>
+    </tr>
+    <tr>
+      <td class="vineta"></td>
+      <td> Información de clientes en cualquier medio o formato (impresa, CDs, personas, etc.) </td>
+    </tr>
+    <tr>
+      <td class="vineta"></td>
+      <td> Equipos de cómputo </td>
+    </tr>
+    <tr>
+      <td class="vineta"></td>
+      <td> Servidores </td>
+    </tr>
+  </table>
+</div>
+<div id="pop9" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap9b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Acceso no autorizado a información del Banco o de sus clientes. </div>
+<div id="pop10" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap9c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Infección por código malicioso (virus, <em>ransomware</em>, etc.). </div>
+<div id="pop11" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap9d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Robo o extracción de información. </div>
+<div id="pop12" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap9e.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Divulgación no autorizada de información Confidencial del Banco o de sus clientes. </div>
+<div id="pop13" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap9f.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Préstamo de usuarios y contraseñas. </div>
+<div id="pop14" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap9g.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Envío de información Confidencial a cuentas de correos personales. </div>
+<div id="pop15" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap9h.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Suplantación de usuarios. </div>
+<div id="pop16" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap9i.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Alteración de información de manera no autorizada. </div>
+<div id="pop17" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap12b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  La Información Pública es considerada de carácter público y <span class="negrilla">puede ser divulgada a cualquier persona o entidad interna o externa al Banco</span>, sin ninguna restricción. </div>
+<div id="pop18" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap12c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  La Información de Uso Interno puede ser conocida por los empleados del Banco sin restricción, pero <span class="negrilla">no puede ser conocida o compartida a terceros sin autorización</span> del responsable del activo de información o directivas del Banco. Su revelado puede conllevar a pérdidas operacionales para el negocio. </div>
+<div id="pop19" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap12d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  La Información Confidencial se considera sensible y es accedida o utilizada solo por un grupo limitado de empleados, áreas o procesos, y su revelado puede conllevar a pérdidas económicas o reputacionales para el negocio.<span class="negrilla"> No debe ser conocida por otros empleados o terceros sin autorización</span> especial del dueño del proceso, custodio del activo de información o directivas del Banco Popular. </div>
+<div id="pop20" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap12e.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  La Información Confidencial Restringida, por su naturaleza, al ser accedida o divulgada de manera no autorizada, puede ocasionar graves e irreparables consecuencias en la continuidad, posicionamiento, competitividad, seguridad y operación del Banco. Su conocimiento es <span class="negrilla">exclusivo del responsable y/o administrador de la misma o de un grupo muy selecto de la alta dirección</span>. Incluye la información de Reserva Bancaria de clientes o Datos Personales clasificados como “sensibles”. </div>
+<div id="pop21" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap12f.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">La información catalogada como Pública no se etiqueta.</span> </div>
+<div id="pop22" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap16b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  La etiqueta debe iniciar con la palabra “INFORMACIÓN” seguida de la clasificación asignada. </div>
+<div id="pop23" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap16c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Para las cartas, formatos, formas, presentaciones, manuales, reportes, informes, boletines, instructivos, entre otros, la etiqueta debe estar ubicada en el pie de página, centrada y en mayúscula. </div>
+<div id="pop24" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap16d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Para la información que se envíe por correo electrónico, la etiqueta se debe ubicar al final del asunto del mensaje, separada por un guión. </div>
+<div id="pop25" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+</div>
+<div id="pop26" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+</div>
+<div id="pop29" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+</div>
+</body>
+</html>
